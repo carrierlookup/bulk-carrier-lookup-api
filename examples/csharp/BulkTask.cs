@@ -2,7 +2,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-// 查询一个已提交任务的状态。提交用 multipart，见 README 的 curl 示例。
+// 查询一个已提交的 global_carrier_batch 任务。提交用 multipart，见 README 的 curl 示例。
 class BulkTask
 {
     static async Task Main(string[] args)

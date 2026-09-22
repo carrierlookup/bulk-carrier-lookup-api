@@ -1,39 +1,38 @@
-# Bulk Carrier Lookup API — Asynchronous List Processing | CarrierLookup
+# Bulk Global Carrier Lookup — `global_carrier_batch` | CarrierLookup
 
-The **CarrierLookup Bulk Carrier Lookup API** processes whole lists asynchronously: upload a file, get a task id immediately, poll the task, and download the result file when it finishes. This is the official CarrierLookup example repository for the bulk endpoints, with runnable integrations in seven languages.
+Bulk carrier lookup is built for lists from a thousand numbers upward: upload a file, the task runs in the background, and you download a result archive when it completes. Pick the country the numbers belong to when you upload: it is submitted with the file, completes any number that has no country code, and the file is checked against it.
 
-- **Product overview:** https://carrierlookup.online/products
+This is the official CarrierLookup example repository for **one** bulk product, `global_carrier_batch`. It is an asynchronous task: upload a file, get a task id immediately, poll the task, and download the result file when it finishes.
+
+- **Product page:** https://carrierlookup.online/products/global_carrier_batch
 - **API documentation:** https://carrierlookup.online/api-docs
 - **API base URL:** `https://carrierlookup.online`
 - **Authentication:** `X-API-Key`
 - **Get an API key:** https://carrierlookup.online/register
 
-## Bulk tasks or realtime checks — which endpoint do I want?
+## What is it usually used for?
 
-CarrierLookup exposes two different shapes, and they are not interchangeable:
+- List segmentation
+- Routing cost review
+- Database hygiene
 
-| | Realtime check | Bulk task (this repository) |
+## What does the result file contain?
+
+| Column | Example | Meaning |
 |---|---|---|
-| Endpoint | `POST /api/v1/check`, `POST /api/v1/batch-check` | `POST /api/v1/bulk-tasks` |
-| Input | one identifier, or up to 100 per request | a `.txt`/`.csv` file, 1,000–100,000 lines |
-| Response | the result, in the same response | a task id; the result arrives later |
-| Use it for | a signup form, a checkout step, a live lookup | list cleaning, campaign preparation, enrichment runs |
+| `number` | `17253100591` |  |
+| `carrier` | `T-Mobile` |  |
+| `underlying_carrier` | `` |  |
+| `number_type` | `Fixed Line or Mobile` |  |
+| `country_code` | `US` |  |
+| `region` | `NV` |  |
+| `city` | `LAS VEGAS` |  |
 
-Realtime examples live in the other repositories under the [CarrierLookup organization](https://github.com/carrierlookup). Everything below is the asynchronous path.
-
-## Which products can a task use?
-
-One task carries **one product** and **one country**. A list spanning several markets becomes one task per market.
-
-| Product code | Name | Result columns |
-|---|---|---|
-| `global_carrier_batch` | Global Carrier Lookup (File) | `number`, `carrier`, `underlying_carrier`, `number_type`, `country_code`, `region`, `city` |
-
-Each product returns a **signal**, not a verdict. Carrier data is affected by number portability and is not a subscriber-identity lookup.
+The result is a **point-in-time signal**, not a verdict, and not identity data. It describes what the provider reported at the moment the task ran.
 
 ## How do I submit a task?
 
-Upload a `.txt` or `.csv` with **one phone number per line**, 1,000–100,000 valid entries, from a single country.
+Upload a `.txt` or `.csv` with **one phone number per line**, 1,000–100,000 valid entries. A number list must come from a **single country**, given as `country` — the upstream uses it to expand bare national numbers.
 
 ```bash
 curl -X POST 'https://carrierlookup.online/api/v1/bulk-tasks' \
@@ -53,6 +52,10 @@ curl -fsS 'https://carrierlookup.online/api/v1/bulk-tasks/TASK_ID' -H 'X-API-Key
 
 `status` is `processing`, `success` or `failed` — there is no progress percentage to poll for. **Do not poll more often than once every 30 seconds.** When the task succeeds the response carries the result-file download link.
 
+## Bulk task or realtime check?
+
+`POST /api/v1/bulk-tasks` (this repository) takes a file of 1,000–100,000 entries and answers later — that is the shape for list cleaning, campaign preparation and enrichment runs. A **realtime** check (`POST /api/v1/check`, or `POST /api/v1/batch-check` for up to 100 identifiers) answers inside the same HTTP response, for a signup form or a live lookup. The two are separate endpoints and are not interchangeable; see the other repositories under [carrierlookup](https://github.com/carrierlookup).
+
 ## What about billing?
 
 The whole file is reserved on submit. When the task finishes you are charged only for the entries that were actually checked and the remainder is returned. A failed task is refunded in full.
@@ -63,8 +66,8 @@ The whole file is reserved on submit. When the task finishes you are charged onl
 |---|---|
 | Entries per task | 1,000–100,000 |
 | File formats | `.txt`, `.csv`, one entry per line |
-| Countries per task | 1 |
-| Products per task | 1 |
+| Products per task | 1 (`global_carrier_batch`) |
+| Country | required, exactly one per task |
 | Poll interval | no more than once per 30 seconds |
 
 `40000`/`40001` are request or file errors; `40100` is an invalid key; `40200` is insufficient balance; `42900` is rate limited — honour `Retry-After`; `50300` is temporary maintenance. `GET /api/v1/balance` returns the current balance in `data.balance_micros`.
@@ -83,11 +86,10 @@ Keep the key on a trusted server and read it from `CARRIERLOOKUP_API_KEY`. Never
 | PHP | [`examples/php`](examples/php) |
 | Shell / curl | [`examples/shell`](examples/shell) |
 
-Each example submits a task and then polls it; extend the poll into a loop that respects the 30-second interval.
-
 ## Official resources and responsible use
 
-- **Products:** https://carrierlookup.online/products
+- **This product:** https://carrierlookup.online/products/global_carrier_batch
+- **All products:** https://carrierlookup.online/products
 - **Documentation:** https://carrierlookup.online/api-docs
 - **Registration:** https://carrierlookup.online/register
 - **Pricing:** https://carrierlookup.online/pricing

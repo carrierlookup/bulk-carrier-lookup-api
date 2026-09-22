@@ -7,4 +7,4 @@ From `examples/` (so `numbers.txt` is alongside):
 
 Polling must not be more frequent than once every 30 seconds.
 
-See [the main README](../../README.md) for the full task contract.
+See [the main README](../../README.md) for the full `global_carrier_batch` contract.

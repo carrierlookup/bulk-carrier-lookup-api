@@ -3,7 +3,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-// 查询一个已提交任务的状态。提交用 multipart，见 README 的 curl 示例。
+// 查询一个已提交的 global_carrier_batch 任务。提交用 multipart，见 README 的 curl 示例。
 public class BulkTask {
     public static void main(String[] args) throws Exception {
         String apiKey = System.getenv("CARRIERLOOKUP_API_KEY");

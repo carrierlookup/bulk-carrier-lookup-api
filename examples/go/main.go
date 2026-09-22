@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-// 提交一个批量任务，然后查询一次状态。真实集成请把查询放进循环，间隔不短于 30 秒。
+// 提交一个 global_carrier_batch 任务，然后查询一次状态。真实集成请把查询放进循环，间隔不短于 30 秒。
 func main() {
 	key := os.Getenv("CARRIERLOOKUP_API_KEY")
 	if key == "" {

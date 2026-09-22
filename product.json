@@ -1,10 +1,10 @@
 {
-  "name": "Bulk Carrier Lookup API",
+  "name": "Bulk Global Carrier Lookup",
   "brand": "CarrierLookup",
   "repository": "carrierlookup/bulk-carrier-lookup-api",
-  "description": "Asynchronous bulk carrier lookups: original carrier, line type and allocation over whole number lists.",
+  "description": "Upload a whole file of numbers and download the carrier data when the task finishes.",
   "official_site": "https://carrierlookup.online",
-  "landing_page": "https://carrierlookup.online/products",
+  "landing_page": "https://carrierlookup.online/products/global_carrier_batch",
   "canonical_docs": "https://carrierlookup.online/api-docs",
   "base_url": "https://carrierlookup.online",
   "auth": {
@@ -12,6 +12,9 @@
     "header": "X-API-Key"
   },
   "mode": "async-bulk",
+  "product": "global_carrier_batch",
+  "identifier_kind": "phone",
+  "requires_country": true,
   "endpoints": {
     "submit": {
       "method": "POST",
@@ -35,20 +38,41 @@
       "csv"
     ]
   },
-  "products": [
+  "result_fields": [
     {
-      "type": "global_carrier_batch",
-      "name": "Global Carrier Lookup (File)",
-      "inputKind": "phone",
-      "resultFields": [
-        "number",
-        "carrier",
-        "underlying_carrier",
-        "number_type",
-        "country_code",
-        "region",
-        "city"
-      ]
+      "name": "number",
+      "example": "17253100591",
+      "description": ""
+    },
+    {
+      "name": "carrier",
+      "example": "T-Mobile",
+      "description": ""
+    },
+    {
+      "name": "underlying_carrier",
+      "example": "",
+      "description": ""
+    },
+    {
+      "name": "number_type",
+      "example": "Fixed Line or Mobile",
+      "description": ""
+    },
+    {
+      "name": "country_code",
+      "example": "US",
+      "description": ""
+    },
+    {
+      "name": "region",
+      "example": "NV",
+      "description": ""
+    },
+    {
+      "name": "city",
+      "example": "LAS VEGAS",
+      "description": ""
     }
   ],
   "statuses": [

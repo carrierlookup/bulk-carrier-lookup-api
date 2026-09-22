@@ -1,11 +1,11 @@
 openapi: 3.0.3
 info:
-  title: Bulk Carrier Lookup API
+  title: Bulk Global Carrier Lookup
   version: 1.0.0
-  description: Asynchronous bulk tasks - submit a file, poll the task, download the result.
+  description: Asynchronous bulk task for global_carrier_batch - submit a file, poll the task, download the result.
   contact:
     name: CarrierLookup
-    url: https://carrierlookup.online/products
+    url: https://carrierlookup.online/products/global_carrier_batch
   license:
     name: MIT
     url: https://opensource.org/license/mit
@@ -19,7 +19,7 @@ security:
 paths:
   /api/v1/bulk-tasks:
     post:
-      summary: Submit a bulk task
+      summary: Submit a global_carrier_batch task
       requestBody:
         required: true
         content:
@@ -32,7 +32,7 @@ paths:
                   type: string
                   enum: [global_carrier_batch]
                 country: { type: string, description: ISO country or region code }
-                file: { type: string, format: binary, description: txt or csv, one entry per line, 1000-100000 entries }
+                file: { type: string, format: binary, description: txt or csv, one phone number per line, 1000-100000 entries }
       responses:
         '200': { description: Task created with status processing }
         '400': { description: Invalid request or file }
