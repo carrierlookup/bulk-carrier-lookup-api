@@ -20,13 +20,13 @@ This is the official CarrierLookup example repository for **one** bulk product, 
 
 | Column | Example | Meaning |
 |---|---|---|
-| `number` | `17253100591` |  |
-| `carrier` | `T-Mobile` |  |
-| `underlying_carrier` | `` |  |
-| `number_type` | `Fixed Line or Mobile` |  |
-| `country_code` | `US` |  |
-| `region` | `NV` |  |
-| `city` | `LAS VEGAS` |  |
+| `number` | `17253100591` | The original submitted E.164 number, used to match carrier and geographic results back to the original list record. |
+| `carrier` | `T-Mobile` | The customer-facing carrier name when identifiable. Use it for service routing or CRM enrichment; do not infer that no carrier exists when the value is empty. |
+| `underlying_carrier` | `` | The underlying network-carrier information when identifiable. It can differ from carrier for resellers, virtual operators or ported numbers. |
+| `number_type` | `Fixed Line or Mobile` | The returned line type, such as mobile, fixed line or another identifiable category. It can support routing and segmentation when used with your own business rules. |
+| `country_code` | `US` | The returned country or territory code for baseline grouping and regional reporting across international lists. It is not a person’s current location. |
+| `region` | `NV` | The returned region or state/province context when available. It supports regional analysis and should not be treated as an exact geographic location. |
+| `city` | `LAS VEGAS` | The returned city-level context when available. Data sources and number allocation can affect accuracy, so validate it against your own address or consent records when needed. |
 
 The result is a **point-in-time signal**, not a verdict, and not identity data. It describes what the provider reported at the moment the task ran.
 
