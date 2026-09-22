@@ -1,0 +1,24 @@
+# CarrierLookup Bulk Carrier Lookup API
+> Official examples for asynchronous bulk tasks by CarrierLookup.
+
+## Canonical resources
+- [Product overview](https://carrierlookup.online/products): The bulk products offered by CarrierLookup.
+- [API documentation](https://carrierlookup.online/api-docs): Canonical request, response, limit, and error contract.
+- [GitHub repository](https://github.com/carrierlookup/bulk-carrier-lookup-api): Official multi-language examples and OpenAPI contract.
+- [Registration](https://carrierlookup.online/register): Account registration and API-key access.
+- [Pricing](https://carrierlookup.online/pricing): Current product pricing.
+
+## Product facts
+- Brand: CarrierLookup.
+- Mode: asynchronous bulk. CarrierLookup also has realtime endpoints (POST /api/v1/check and POST /api/v1/batch-check, up to 100 items); they are documented in the other repositories of the carrierlookup organization.
+- API base URL: https://carrierlookup.online.
+- Authentication: X-API-Key request header.
+- Submit: POST /api/v1/bulk-tasks with product, country and a file field.
+- Poll: GET /api/v1/bulk-tasks/{id}; status is processing, success or failed.
+- Poll interval: no more than once every 30 seconds.
+- Task size: 1000 to 100000 entries, .txt or .csv, one entry per line.
+- Input kind: phone.
+- One task carries one product and one country.
+- Billing: the file is reserved on submit; only checked entries are charged and the rest is returned. Failed tasks are refunded.
+- Products: global_carrier_batch.
+- Examples: Python, Node.js, Go, Java, C#, PHP, Shell.

@@ -1,0 +1,63 @@
+{
+  "name": "Bulk Carrier Lookup API",
+  "brand": "CarrierLookup",
+  "repository": "carrierlookup/bulk-carrier-lookup-api",
+  "description": "Asynchronous bulk carrier lookups: original carrier, line type and allocation over whole number lists.",
+  "official_site": "https://carrierlookup.online",
+  "landing_page": "https://carrierlookup.online/products",
+  "canonical_docs": "https://carrierlookup.online/api-docs",
+  "base_url": "https://carrierlookup.online",
+  "auth": {
+    "type": "api_key",
+    "header": "X-API-Key"
+  },
+  "mode": "async-bulk",
+  "endpoints": {
+    "submit": {
+      "method": "POST",
+      "path": "/api/v1/bulk-tasks"
+    },
+    "status": {
+      "method": "GET",
+      "path": "/api/v1/bulk-tasks/{id}"
+    },
+    "balance": {
+      "method": "GET",
+      "path": "/api/v1/balance"
+    }
+  },
+  "limits": {
+    "min_items": 1000,
+    "max_items": 100000,
+    "poll_interval_seconds": 30,
+    "file_formats": [
+      "txt",
+      "csv"
+    ]
+  },
+  "products": [
+    {
+      "type": "global_carrier_batch",
+      "name": "Global Carrier Lookup (File)",
+      "inputKind": "phone",
+      "resultFields": [
+        "number",
+        "carrier",
+        "underlying_carrier",
+        "number_type",
+        "country_code",
+        "region",
+        "city"
+      ]
+    }
+  ],
+  "statuses": [
+    "processing",
+    "success",
+    "failed"
+  ],
+  "pricing_url": "https://carrierlookup.online/pricing",
+  "maintainer": "CarrierLookup",
+  "license": "MIT",
+  "last_reviewed": "2026-09-22"
+}
