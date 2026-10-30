@@ -1,10 +1,10 @@
 {
-  "name": "Bulk Global Carrier Lookup",
+  "name": "Global Carrier Lookup (File)",
   "brand": "CarrierLookup",
   "repository": "carrierlookup/bulk-carrier-lookup-api",
   "description": "Upload a whole file of numbers and download the carrier data when the task finishes.",
   "official_site": "https://carrierlookup.online",
-  "landing_page": "https://carrierlookup.online/products/global_carrier_batch",
+  "landing_page": "https://carrierlookup.online/products/carrier_batch",
   "canonical_docs": "https://carrierlookup.online/api-docs",
   "base_url": "https://carrierlookup.online",
   "auth": {
@@ -12,7 +12,7 @@
     "header": "X-API-Key"
   },
   "mode": "async-bulk",
-  "product": "global_carrier_batch",
+  "product": "carrier_batch",
   "identifier_kind": "phone",
   "requires_country": true,
   "endpoints": {
@@ -31,7 +31,7 @@
   },
   "limits": {
     "min_items": 1000,
-    "max_items": 100000,
+    "max_items": 500000,
     "poll_interval_seconds": 30,
     "file_formats": [
       "txt",
@@ -40,39 +40,39 @@
   },
   "result_fields": [
     {
-      "name": "number",
-      "example": "17253100591",
-      "description": "The original submitted E.164 number, used to match carrier and geographic results back to the original list record."
+      "name": "identifier",
+      "example": "12345678900",
+      "description": "Submitted identifier, used to join the result to the input. Phone identifiers include their country code."
     },
     {
       "name": "carrier",
       "example": "T-Mobile",
-      "description": "The customer-facing carrier name when identifiable. Use it for service routing or CRM enrichment; do not infer that no carrier exists when the value is empty."
+      "description": "Carrier information returned for the number; this is not a guarantee of its current ported network."
     },
     {
       "name": "underlying_carrier",
       "example": "",
-      "description": "The underlying network-carrier information when identifiable. It can differ from carrier for resellers, virtual operators or ported numbers."
+      "description": "Underlying network information when available."
     },
     {
       "name": "number_type",
       "example": "Fixed Line or Mobile",
-      "description": "The returned line type, such as mobile, fixed line or another identifiable category. It can support routing and segmentation when used with your own business rules."
+      "description": "Returned line type when available."
     },
     {
       "name": "country_code",
       "example": "US",
-      "description": "The returned country or territory code for baseline grouping and regional reporting across international lists. It is not a person’s current location."
+      "description": "Returned country/territory code; not the person’s current location."
     },
     {
       "name": "region",
-      "example": "NV",
-      "description": "The returned region or state/province context when available. It supports regional analysis and should not be treated as an exact geographic location."
+      "example": "CA",
+      "description": "Number-associated region when available, not precise location."
     },
     {
       "name": "city",
-      "example": "LAS VEGAS",
-      "description": "The returned city-level context when available. Data sources and number allocation can affect accuracy, so validate it against your own address or consent records when needed."
+      "example": "LOS ANGELES",
+      "description": "Number-associated city when available, not precise location."
     }
   ],
   "statuses": [
@@ -83,5 +83,5 @@
   "pricing_url": "https://carrierlookup.online/pricing",
   "maintainer": "CarrierLookup",
   "license": "MIT",
-  "last_reviewed": "2026-09-22"
+  "last_reviewed": "2026-10-30"
 }

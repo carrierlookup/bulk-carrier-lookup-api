@@ -3,14 +3,15 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-// 查询一个已提交的 global_carrier_batch 任务。提交用 multipart，见 README 的 curl 示例。
+// 查询一个已提交的 carrier_batch 任务。提交用 multipart，见 README 的 curl 示例。
 public class BulkTask {
     public static void main(String[] args) throws Exception {
         String apiKey = System.getenv("CARRIERLOOKUP_API_KEY");
         if (apiKey == null) throw new IllegalStateException("Set CARRIERLOOKUP_API_KEY");
+        String baseUrl = System.getenv().getOrDefault("API_BASE_URL", "https://carrierlookup.online");
         String taskId = args.length > 0 ? args[0] : System.getenv("TASK_ID");
         if (taskId == null) throw new IllegalStateException("Pass a task id");
-        HttpRequest request = HttpRequest.newBuilder(URI.create("https://carrierlookup.online/api/v1/bulk-tasks/" + taskId))
+        HttpRequest request = HttpRequest.newBuilder(URI.create(baseUrl + "/api/v1/bulk-tasks/" + taskId))
             .header("X-API-Key", apiKey)
             .GET()
             .build();
